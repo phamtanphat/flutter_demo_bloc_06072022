@@ -1,4 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_demo_bloc_06072022/product_bloc.dart';
+import 'package:flutter_demo_bloc_06072022/product_event.dart';
+import 'package:flutter_demo_bloc_06072022/product_state.dart';
 class ProductPage extends StatefulWidget {
   const ProductPage({Key? key}) : super(key: key);
 
@@ -14,26 +18,61 @@ class _ProductPageState extends State<ProductPage> {
         title: Text("Demo Bloc"),
       ),
       body: Container(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          crossAxisAlignment: CrossAxisAlignment.stretch,
-          children: [
-            ElevatedButton(
-                onPressed: (){
-
-                },
-                child: Text("+")
-            ),
-            Text("0"),
-            ElevatedButton(
-                onPressed: (){
-
-                },
-                child: Text("-")
-            ),
-          ],
+        child: BlocProvider(
+          create: (_) => ProductBloc(),
+          child: CalculatorWidget(),
         ),
       ),
     );
   }
 }
+
+class CalculatorWidget extends StatefulWidget {
+  const CalculatorWidget({Key? key}) : super(key: key);
+
+  @override
+  State<CalculatorWidget> createState() => _CalculatorWidgetState();
+}
+
+class _CalculatorWidgetState extends State<CalculatorWidget> {
+  late ProductBloc productBloc;
+
+  @override
+  void initState() {
+    super.initState();
+    productBloc = context.read<ProductBloc>();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return BlocConsumer<ProductBloc, ProductStateBase>(
+      listener: (context, state) {
+        print(state.runtimeType);
+      },
+      builder: (context, state) {
+        return Center(
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: [
+              ElevatedButton(
+                  onPressed: (){
+                    productBloc.add(IncreaseEvent());
+                  },
+                  child: Text("+")
+              ),
+              Text(state.value.toString()),
+              ElevatedButton(
+                  onPressed: (){
+
+                  },
+                  child: Text("-")
+              ),
+            ],
+          ),
+        );
+      },
+    );
+  }
+}
+

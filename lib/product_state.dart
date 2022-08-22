@@ -12,5 +12,13 @@ class ProductStateInit extends ProductStateBase {
 
   @override
   List<Object?> get props => [value];
+}
+
+class ProductState extends ProductStateBase {
+
+  ProductState({required super.value});
+
+  @override
+  List<Object?> get props => [value];
 
 }
