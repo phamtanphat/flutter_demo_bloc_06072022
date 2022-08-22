@@ -1,11 +1,14 @@
 import 'package:equatable/equatable.dart';
 
-abstract class ProductStateBase extends Equatable{}
-
-class ProductStateInit extends ProductStateBase {
+abstract class ProductStateBase extends Equatable{
   int value;
 
-  ProductStateInit({required this.value});
+  ProductStateBase({required this.value});
+}
+
+class ProductStateInit extends ProductStateBase {
+
+  ProductStateInit({required super.value});
 
   @override
   List<Object?> get props => [value];

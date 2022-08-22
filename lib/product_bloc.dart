@@ -3,8 +3,9 @@ import 'package:flutter_demo_bloc_06072022/product_event.dart';
 import 'package:flutter_demo_bloc_06072022/product_state.dart';
 
 class ProductBloc extends Bloc<ProductEventBase, ProductStateBase> {
-  ProductBloc() : super(ProductStateInit(value: 0));
-
-  on<>
-
+  ProductBloc() : super(ProductStateInit(value: 0)) {
+    on<IncreaseEvent>((event, emit) {
+      state.value
+    });
+  }
 }
